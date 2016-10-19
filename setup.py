@@ -21,7 +21,7 @@ def install_startscript():
 
 setup(
     name='dirvishbot',
-    version='0.0.1',
+    version='0.0.2',
     description='A simple telegram bot for dirvish',
     url='https://github.com/jkuettner/dirvishbot',
     download_url='https://github.com/jkuettner/dirvishbot',
