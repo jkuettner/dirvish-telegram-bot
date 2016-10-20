@@ -161,7 +161,7 @@ class DirvishBot:
         """
         logger.debug('Received signal %d.' % signum)
         if signum == signal.SIGUSR1:
-            failed = ['hallo']
+            failed = []
             self._dirvish.refresh()
             for bank, vaults in self._dirvish.get().items():
                 for vault in vaults:
