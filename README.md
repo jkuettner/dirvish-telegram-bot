@@ -45,6 +45,15 @@ The `config.json` should look like the following:
 }
 
 ```
+### 3. Trigger dirvishbot after the backup-process
+The dirvishbot listens to the signal `SIGUSR1` to check the state of all backups and informs all subscribers if one of the backups has failed.
+
+With the following line the dirvishbot will be notified:
+```
+bash -c 'kill -s SIGUSR1 $(< /var/run/dirvishbot.pid)'
+```
+You can put this line just before `exit $rc` in `/etc/dirvish/dirvish-cronjob` to start the backup-check after dirvish has finished.
+
 
 ## Run
 If you have systemd installed the `dirvishbot.service` file will be placed to `/etc/systemd/system/dirvishbot.service` and you can start it with:
