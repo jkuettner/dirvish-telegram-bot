@@ -14,9 +14,19 @@ pip install dirvishbot
 ```
 or
 ```
-git clone https://github.com/jkuettner/dirvishbot.git && cd dirvishbot
-pip install .
+git clone https://github.com/jkuettner/dirvishbot.git && cd dirvishbot && pip install .
 ```
+
+## Update
+To update simply run
+```
+pip install --upgrade dirvishbot
+```
+or
+```
+git clone https://github.com/jkuettner/dirvishbot.git && cd dirvishbot && pip install --upgrade .
+```
+
 ## Configuration
 ### 1. Create a new telegram bot
 - Start conversation with `@botfather`
