@@ -37,7 +37,6 @@ class DirvishBot:
         self._api_token = self._config.get('api_token')
         if self._api_token is None:
             message = 'Failed to get "api_token" from config "/etc/dirvishbot/config.json".'
-            print(message)
             logger.debug(message)
             sys.exit(1)
         self._pid = os.getpid()
@@ -120,6 +119,21 @@ class DirvishBot:
             return '❓'
         return '❌'
 
+    def _format_size(self, size, precision=2):
+        """
+        Format size (in bytes) to human readable sizes.
+
+        :param size:
+        :param precision:
+        :return:
+        """
+        suffixes=['B','K','M','G','T']
+        suffixIndex = 0
+        while size > 1024 and suffixIndex < 4:
+            suffixIndex += 1
+            size = size / 1024.0
+        return "%.*f %s"%(precision,size,suffixes[suffixIndex])
+
     def _disk_usage(self, path):
         """
         Get the current disk stats.
@@ -129,13 +143,13 @@ class DirvishBot:
         """
         statvfs = os.statvfs(path)
 
-        size = float(statvfs.f_frsize * statvfs.f_blocks) / (1024 * 1024 * 1024 * 1024)
-        free = float(statvfs.f_frsize * statvfs.f_bavail) / (1024 * 1024 * 1024 * 1024)
+        size = float(statvfs.f_frsize * statvfs.f_blocks)
+        free = float(statvfs.f_frsize * statvfs.f_bavail)
         used = size - free
 
         disk_usage = '\n*Disk stats:*\n'
-        disk_usage += '`Used: %.1fG`\n' % round(used, 2)
-        disk_usage += '`Free: %.1fG`\n' % round(free, 2)
+        disk_usage += '`Used: %s`\n' % self._format_size(used)
+        disk_usage += '`Free: %s`\n' % self._format_size(free)
 
         return disk_usage
 
