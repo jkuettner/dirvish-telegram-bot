@@ -17,7 +17,7 @@ class Dirvish:
     """
     Class to collect information of your backups based on your dirvish master.conf.
     """
-    def __init__(self, masterconf_path='master.conf'):
+    def __init__(self, masterconf_path='/etc/dirvish/master.conf'):
         """
         :param str masterconf_path: Path to your dirvish master.conf
         """
