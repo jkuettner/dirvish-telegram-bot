@@ -88,7 +88,7 @@ After the first start you have one hour to register an admin-user with this bot 
 
 **Note that the first user that will send the `/register <TOKEN>` to your bot will become the administrator.**
 
-To reset the bot simple stop it, delete the `config.json`-file and restart the bot.
+To reset the bot simple stop it, delete every line but `"api_token": ...` from the `config.json`-file and restart the bot.
 
 ### Commands
 To run a command, send one of the following messages to your telegram-bot from your telegram-client:
