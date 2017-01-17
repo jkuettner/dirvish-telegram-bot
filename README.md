@@ -36,7 +36,7 @@ Further informations about how to create a new bot: https://core.telegram.org/bo
 ### 2. Create `config.json`
 You have to create a config.json with the telegram bot token in it. To do this you could copy the `config.example.json` to `/etc/dirvishbot/config.json` and replace the example `api_token` with yours:
 ```
-cp /etc/dirvishbot/config.example.json /etc/dirvishbot/config.json
+cp /etc/dirvishbot/config.json.example /etc/dirvishbot/config.json
 ```
 The `config.json` should look like the following:
 ```

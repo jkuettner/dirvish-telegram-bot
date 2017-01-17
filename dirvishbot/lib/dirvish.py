@@ -12,16 +12,12 @@ DIRVISH_ERROR = 1
 
 logger = logging.getLogger(__name__)
 
-# install
-# config ändern (token setzen)
-# systemctl start dirvishbot
-
 
 class Dirvish:
     """
     Class to collect information of your backups based on your dirvish master.conf.
     """
-    def __init__(self, masterconf_path='/etc/dirvish/master.conf'):
+    def __init__(self, masterconf_path='master.conf'):
         """
         :param str masterconf_path: Path to your dirvish master.conf
         """
@@ -55,20 +51,23 @@ class Dirvish:
         :return:
         """
         logger.debug("Load banks from master.conf")
-        bank_start = re.compile("^bank:$")
-        bank_stop = re.compile(".*:$")
+        bank_start = re.compile("^\s*bank:$")
+        bank_stop = re.compile("^[^#].*:.*")
         start = False
         with open(self._masterconf_path, 'r') as f:
             for line in f:
                 if bank_start.match(line):
+                    print("--> start")
                     start = True
                     continue
-                if bank_stop.match(line):
+                if start and bank_stop.match(line):
+                    print("--> stop")
                     break
                 if start:
                     current_bank = line.strip()
                     if len(current_bank) > 0:
                         if os.path.isdir(current_bank):
+                            print("current:", current_bank)
                             self._banks[current_bank] = []
 
     def init_vaults(self):
@@ -119,3 +118,8 @@ class Dirvish:
                                     vault['backups'][backup]['expires'] = expire_regex.match(expire[0]).group(1)
         except Exception as e:
             logger.error('Failed to get backups.', exc_info=True)
+
+
+d = Dirvish()
+d.refresh()
+print(d.get())
