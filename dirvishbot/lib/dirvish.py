@@ -57,17 +57,14 @@ class Dirvish:
         with open(self._masterconf_path, 'r') as f:
             for line in f:
                 if bank_start.match(line):
-                    print("--> start")
                     start = True
                     continue
                 if start and bank_stop.match(line):
-                    print("--> stop")
                     break
                 if start:
                     current_bank = line.strip()
                     if len(current_bank) > 0:
                         if os.path.isdir(current_bank):
-                            print("current:", current_bank)
                             self._banks[current_bank] = []
 
     def init_vaults(self):
@@ -108,8 +105,8 @@ class Dirvish:
                         if os.path.isfile(summary):
                             with open(summary, 'r') as summary_file:
                                 content = summary_file.readlines()
-                                if filter(backup_regex.match, content):
-                                    if filter(status_regex.match, content):
+                                if list(filter(backup_regex.match, content)):
+                                    if list(filter(status_regex.match, content)):
                                         vault['backups'][backup]['status'] = DIRVISH_SUCCESS
                                 else:
                                     vault['backups'][backup]['status'] = DIRVISH_RUNNING
@@ -118,8 +115,3 @@ class Dirvish:
                                     vault['backups'][backup]['expires'] = expire_regex.match(expire[0]).group(1)
         except Exception as e:
             logger.error('Failed to get backups.', exc_info=True)
-
-
-d = Dirvish()
-d.refresh()
-print(d.get())

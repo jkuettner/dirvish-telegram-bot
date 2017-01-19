@@ -25,6 +25,7 @@ class DirvishBot:
     The main class of this bot.
     """
     TOKEN_REGEX = re.compile('^/register ([a-zA-Z0-9]{6})$')
+    STATUS_REGEX = re.compile('^/status ([0-9])$')
     _tokens = {}
 
     def __init__(self):
@@ -345,6 +346,11 @@ class DirvishBot:
         :return:
         """
         try:
+            status_amount = self.STATUS_REGEX.match(update.message.text)
+            if status_amount:
+                status_amount = int(status_amount.group(1))
+            else:
+                status_amount = 1
             if self.is_registered(update.message.from_user.id):
                 self._dirvish.refresh()
                 message = "*Backup status:*\n"
@@ -353,7 +359,7 @@ class DirvishBot:
                     for vault in vaults:
                         vault_name = vault['path'].split('/')[-1]
                         message += '    %s/\n' % vault_name
-                        for backup in sorted(vault['backups'], reverse=True):
+                        for backup in sorted(vault['backups'], reverse=True)[0:status_amount]:
                             backup_name = backup.split('/')[-1]
                             expires = vault['backups'][backup]['expires']
                             message += '      `%s`: %s\n' % (

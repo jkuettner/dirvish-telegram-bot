@@ -97,4 +97,4 @@ To run a command, send one of the following messages to your telegram-bot from y
 - `/adduser`: generates a token for your contact that will be able to run the `/register`-command. The token invalidates after 24 hours. (only admins)
 - `/subscribe`: enable notification of failed backups (every registered user)
 - `/unsubscribe`: disable notification of failed backups (every registered user)
-- `/status`: show the current status of all backups (every registered user)
+- `/status <AMOUNT>`: show the current status of the <AMOUNT> (DEFAULT=1) of last backups. (every registered user).
